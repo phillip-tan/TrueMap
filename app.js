@@ -1,5 +1,3 @@
-console.log('Testing')
-
 var svg = d3.select("svg");
 var path = d3.geoPath(); // initialize the drawing pattern as a geometric shape
 
@@ -8,16 +6,16 @@ var tooltip = d3.select("body")
   .append("div")
   .attr("class", "tooltip");
 
-// State color to indicate time until license expiration will be a color gradient.
+// State color to indicate time in days until license expiration will be a color gradient.
 var stateColor = d3.scaleLinear()
-  .domain([0, 365])
+  .domain([-365, 0, 365])
 	.range(['red', '#ddd', 'lightgreen']);
 
 
 var legendText = ["Most Expiring", "Neutral", "Least Expiring"];
 // Legend will display most expiring, neutral, and least expiring example color tones from gradient.
 var legendColor = d3.scaleLinear()
-  .domain([0, 3])
+  .domain([-1, 0, 1])
   .range(['red', '#ddd', 'lightgreen']);
 
 
@@ -26,20 +24,20 @@ var legend = d3.select("body").append("svg")
   .attr("width", 140)
   .attr("height", 200)
   .selectAll("g")
-  .data(legendColor.domain().slice().reverse())
+  .data(legendColor.domain().slice()) // slice allows you to access domain which is an array
  // enter allows you to bring in data that don't have elements bound to them
  // append binds the data to the new element
   .enter().append("g")
   .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
-
-// Add the colors to legend.
-legend.append("rect")
-  .attr("width", 18)
- 	.attr("height", 18)
+//Add the colors to legend.
+legend.append("circle")
+  .attr("cx", 10)
+ 	.attr("cy", 10)
+  .attr("r", 8)
  	.style("fill", legendColor);
 
-// Add the labels to legend.
+//Add the labels to legend.
 legend.append("text")
   .data(legendText)
   .attr("x", 24)
@@ -85,7 +83,6 @@ function drawMap(error, us) {
       .on("mouseout", onMouseout) // must do event listener on path element
       .on("click", onClick)
 
-  console.log('break point')
   // draw all of the overlapping borders
   svg.append("path")
       .attr("class", "state-borders")
