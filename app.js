@@ -1,4 +1,4 @@
-console.log('Hello World')
+console.log('Testing')
 
 var svg = d3.select("svg");
 var path = d3.geoPath(); // initialize the drawing pattern as a geometric shape
