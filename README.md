@@ -1,2 +1,2 @@
-# true_licensing
+# True Licensing
 An Interactive Map of US State Licensing for Debt Collections with D3
