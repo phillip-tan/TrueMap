@@ -1,0 +1,51 @@
+name,abbreviation,state_id,expiration_dt,days_until_expiration
+Alabama,AK,01,12/31/2019,73
+Alaska,AL,02,10/19/2019,0
+Arizona,AR,03,10/19/2019,0
+Arkansas,AZ,04,6/30/2020,255
+California,CA,05,10/19/2019,-365
+Colorado,CO,06,7/1/2020,256
+Connecticut,CT,07,12/31/2019,73
+Delaware,DE,08,12/31/2021,804
+Florida,FL,09,10/19/2019,0
+Georgia,GA,10,10/19/2019,0
+Hawaii,HI,11,10/19/2019,0
+Idaho,IA,12,10/19/2019,0
+Illinois,ID,13,10/19/2019,0
+Indiana,IL,14,10/19/2019,0
+Iowa,IN,15,10/19/2019,0
+Kansas,KS,16,10/19/2019,0
+Kentucky,KY,17,10/19/2019,0
+Louisiana,LA,18,10/19/2019,0
+Maine,MA,19,10/19/2019,0
+Maryland,MD,20,10/19/2019,0
+Massachusetts,ME,21,10/19/2019,0
+Michigan,MI,22,10/19/2019,0
+Minnesota,MN,23,10/19/2019,0
+Mississippi,MO,24,10/19/2019,0
+Missouri,MS,25,10/19/2019,0
+Montana,MT,26,10/19/2019,0
+Nebraska,NC,27,10/19/2019,0
+Nevada,ND,28,10/19/2019,0
+New Hampshire,NE,29,10/19/2019,0
+New Jersey,NH,30,10/19/2019,0
+New Mexico,NJ,31,10/19/2019,0
+New York,NM,32,10/19/2019,0
+North Carolina,NV,33,10/19/2019,0
+North Dakota,NY,34,10/19/2019,0
+Ohio,OH,35,10/19/2019,0
+Oklahoma,OK,36,10/19/2019,0
+Oregon,OR,37,10/19/2019,0
+Pennsylvania,PA,38,10/19/2019,0
+Rhode Island,RI,39,10/19/2019,0
+South Carolina,SC,40,10/19/2019,0
+South Dakota,SD,41,10/19/2019,0
+Tennessee,TN,42,10/19/2019,0
+Texas,TX,43,10/19/2019,0
+Utah,UT,44,10/19/2019,0
+Vermont,VA,45,10/19/2019,0
+Virginia,VT,46,10/19/2019,0
+Washington,WA,47,10/19/2019,0
+West Virginia,WI,48,10/19/2019,0
+Wisconsin,WV,49,10/19/2019,0
+Wyoming,WY,50,10/19/2019,0
