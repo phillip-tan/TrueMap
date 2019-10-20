@@ -48,7 +48,7 @@ legend.append("text")
 
 function onClick(d) {
   console.log("click")
-}
+};
 
 function onMouseover(d) {
   console.log("mouseover")
@@ -59,15 +59,32 @@ function onMouseover(d) {
   tooltip.text(d.place)
          .style("left", (d3.event.pageX) + "px")
          .style("top", (d3.event.pageY - 28) + "px")
-}
+};
 
 function onMouseout(d) {
   console.log("mouseout")
   tooltip.transition()
          .duration(500)
          .style("opacity", 0)
-}
+};
 
+function colorStates(states) {
+  console.log(typeof states.id)
+  d3.csv("/state_license_expirations.csv", function(licensingData) {
+    for (var i = 0; i < licensingData.length; i++) {
+      // NOTE: FIND OUT HOW FOR LOOPS AND IF STATEMENTS WORK IN JS!!!
+      console.log(licensingData[i].state_id)
+      console.log(states.id)
+        if (states.id = licensingData[i].state_id) {
+          console.log(licensingData[i].days_until_expiration)
+        // return stateColor(licensingData[i].days_until_expiration)
+      }
+      // console.log(licensingData[i].days_until_expiration)
+      return stateColor(licensingData[i].days_until_expiration)
+    }
+
+  })
+};
 
 
 function drawMap(error, us) {
@@ -79,6 +96,7 @@ function drawMap(error, us) {
     .data(topojson.feature(us, us.objects.states).features) // data join for state land
     .enter().append("path") // add new data since last data join, add path element
       .attr("d", path) // d attribute defines a path to be drawn, draws state land
+	    .style("fill", colorStates) // fill each state path with appropriate color
       .on("mouseover", onMouseover) // the g element above cannot capture clicks
       .on("mouseout", onMouseout) // must do event listener on path element
       .on("click", onClick)
@@ -87,8 +105,9 @@ function drawMap(error, us) {
   svg.append("path")
       .attr("class", "state-borders")
       .attr("d", path(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; })))
+      // .style("fill", () => colors[Math.floor(Math.random() * 2) + 1]);
 };
 
 
-
+//further improvements: read csv directly from google sheets!
 d3.json("https://d3js.org/us-10m.v1.json", drawMap)
