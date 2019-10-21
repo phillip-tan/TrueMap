@@ -7,7 +7,7 @@ var tooltip = d3.select("body")
   .attr("class", "tooltip");
 
 // State color to indicate time in days until license expiration will be a color gradient.
-var stateColor = d3.scaleLinear()
+var stateColorScale = d3.scaleLinear()
   .domain([-365, 0, 365])
 	.range(['red', '#ddd', 'lightgreen']);
 
@@ -68,38 +68,63 @@ function onMouseout(d) {
          .style("opacity", 0)
 };
 
-function colorStates(states) {
-  console.log(typeof states.id)
-  d3.csv("/state_license_expirations.csv", function(licensingData) {
-    for (var i = 0; i < licensingData.length; i++) {
-      // NOTE: FIND OUT HOW FOR LOOPS AND IF STATEMENTS WORK IN JS!!!
-      console.log(licensingData[i].state_id)
-      console.log(states.id)
-        if (states.id = licensingData[i].state_id) {
-          console.log(licensingData[i].days_until_expiration)
-        // return stateColor(licensingData[i].days_until_expiration)
-      }
-      // console.log(licensingData[i].days_until_expiration)
-      return stateColor(licensingData[i].days_until_expiration)
-    }
 
-  })
+function getLicenseExpirationDaysDict(usStates) {
+  var rows;
+  var licenseExpirationDaysDict;
+  d3.csv("/state_license_expirations.csv", function(loadedRows) {
+    rows = loadedRows; // list of dict as rows in csv.
+    // loop through all 51 states from the census data.
+    console.log('start')
+    console.log(rows)
+    usStates.geometries.forEach(createLicenseExpirationDaysDict);
+    console.log(licenseExpirationDaysDict)
+  });
+
+  function createLicenseExpirationDaysDict(stateGeoData) {
+    // THIS FUNCTION HAS ACCESS TO BOTH stateGeoData (one row at a time)
+    // AND rows (csv data to map to expirationDays)
+    licenseExpirationDaysDict = {};
+    // console.log(stateGeoData.id) -- this will show 51 states
+    // FOR SOME REASON THIS FOR LOOP KEEPS GOING ON FOREVER AND BREAKING.
+    // for (var i = 0; i < 50; i++) {
+    //   console.log('test')
+    // //   // console.log(rows)
+    // //     // if (stateGeoData.id == rows[i].state_id) {
+    // //     //   licenseExpirationDaysDict[stateGeoData.id] = rows[i].days_until_expiration;
+    // //     //   break;
+    // //     // } else {
+    // //     //   licenseExpirationDaysDict[stateGeoData.id] = 0 // default color will map to black.
+    // //     // console.log("WIN")
+    // //     // }
+    // //     break;
+    // };
+  };
 };
 
+function getStateColor(usStates) {
+  // get rgb code from scale func by using days until state license expiration.
+  // var daysUntilExpiration = licenseExpirationDaysDict[usStates.id];
+  return stateColorScale(usStates.id)
+};
 
 function drawMap(error, us) {
-  if (error) throw error // establish error handler for callback function
+  if (error) throw error // establish error handler for callback function.
+  var usStates = us.objects.states; // list of dict for ea US state.
+  getLicenseExpirationDaysDict(usStates);
 
   svg.append("g") // add group element to the svg
       .attr("class", "states") // draw all of the states with a class attribute in the json
     .selectAll("path") // allows manipulation of anything within a state border
-    .data(topojson.feature(us, us.objects.states).features) // data join for state land
+    .data(topojson.feature(us, usStates).features) // data join for state land
     .enter().append("path") // add new data since last data join, add path element
       .attr("d", path) // d attribute defines a path to be drawn, draws state land
-	    .style("fill", colorStates) // fill each state path with appropriate color
+      // .style("fill", stateColors[usStates.id])
+	    .style("fill", getStateColor) // fill each state path with appropriate color
       .on("mouseover", onMouseover) // the g element above cannot capture clicks
       .on("mouseout", onMouseout) // must do event listener on path element
       .on("click", onClick)
+
 
   // draw all of the overlapping borders
   svg.append("path")
@@ -108,6 +133,10 @@ function drawMap(error, us) {
       // .style("fill", () => colors[Math.floor(Math.random() * 2) + 1]);
 };
 
-
 //further improvements: read csv directly from google sheets!
 d3.json("https://d3js.org/us-10m.v1.json", drawMap)
+
+// NOTES
+// 1. Understand JS scoping (with hoisting) of variables within functions.
+// 2. Callback functions and the difference between function with and without ().
+// 3. When to use semi-colon in JS.
