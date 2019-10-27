@@ -69,7 +69,7 @@ function onMouseout(d) {
 
 function getStateColor(usStates) {
   // get rgb code from scale func by using days until state license expiration.
-  var expirationDays = expirationDaysDict[usStates.id]
+  var expirationDays = stateLicensingData[usStates.id]
   return stateColorScale(expirationDays);
 };
 
@@ -95,9 +95,9 @@ function drawMap(error, us) {
       // .style("fill", () => colors[Math.floor(Math.random() * 2) + 1]);
 };
 
-var expirationDaysDict = {};
-d3.json('expiration_days.json', function(expiration_days) {
-  expirationDaysDict = expiration_days;
+var stateLicensingData = {};
+d3.json('state_licensing_data.json', function(json_data) {
+  stateLicensingData = json_data;
   });
 //further improvements: read csv directly from google sheets!
 d3.json("https://d3js.org/us-10m.v1.json", drawMap)

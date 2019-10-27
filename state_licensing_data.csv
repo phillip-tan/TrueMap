@@ -1,0 +1,52 @@
+name,abbreviation,state_id,expiration_dt
+Alabama,AK,01,12/31/2019
+Alaska,AL,02,10/26/2019
+Arizona,AR,04,10/26/2019
+Arkansas,AZ,05,6/30/2020
+California,CA,06,10/26/2019
+Colorado,CO,08,7/1/2020
+Connecticut,CT,09,12/31/2019
+Delaware,DE,10,12/31/2021
+District of Columbia,DC,11,10/26/2019
+Florida,FL,12,10/26/2019
+Georgia,GA,13,10/26/2019
+Hawaii,HI,15,10/26/2019
+Idaho,IA,16,10/26/2019
+Illinois,ID,17,10/26/2019
+Indiana,IL,18,10/26/2019
+Iowa,IN,19,10/26/2019
+Kansas,KS,20,10/26/2019
+Kentucky,KY,21,10/26/2019
+Louisiana,LA,22,10/26/2019
+Maine,MA,23,10/26/2019
+Maryland,MD,24,10/26/2019
+Massachusetts,ME,25,10/26/2019
+Michigan,MI,26,10/26/2019
+Minnesota,MN,27,10/26/2019
+Mississippi,MO,28,10/26/2019
+Missouri,MS,29,10/26/2019
+Montana,MT,30,10/26/2019
+Nebraska,NC,31,10/26/2019
+Nevada,ND,32,10/26/2019
+New Hampshire,NE,33,10/26/2019
+New Jersey,NH,34,10/26/2019
+New Mexico,NJ,35,10/26/2019
+New York,NM,36,10/26/2019
+North Carolina,NV,37,10/26/2019
+North Dakota,NY,38,10/26/2019
+Ohio,OH,39,10/26/2019
+Oklahoma,OK,40,10/26/2019
+Oregon,OR,41,10/26/2019
+Pennsylvania,PA,42,10/26/2019
+Rhode Island,RI,44,10/26/2019
+South Carolina,SC,45,10/26/2019
+South Dakota,SD,46,10/26/2019
+Tennessee,TN,47,10/26/2019
+Texas,TX,48,10/26/2019
+Utah,UT,49,10/26/2019
+Vermont,VA,50,10/26/2019
+Virginia,VT,51,10/26/2019
+Washington,WA,53,10/26/2019
+West Virginia,WI,54,10/26/2019
+Wisconsin,WV,55,10/26/2019
+Wyoming,WY,56,10/26/2019
