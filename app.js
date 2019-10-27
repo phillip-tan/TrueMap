@@ -68,55 +68,19 @@ function onMouseout(d) {
          .style("opacity", 0)
 };
 
-
-function getLicenseExpirationDaysDict(usStates) {
-  var rows;
-  var licenseExpirationDaysDict;
-  d3.csv("/state_license_expirations.csv", function(loadedRows) {
-    rows = loadedRows; // list of dict as rows in csv.
-    // loop through all 51 states from the census data.
-    console.log('start')
-    console.log(rows)
-    usStates.geometries.forEach(createLicenseExpirationDaysDict);
-    console.log(licenseExpirationDaysDict)
-  });
-
-  function createLicenseExpirationDaysDict(stateGeoData) {
-    // THIS FUNCTION HAS ACCESS TO BOTH stateGeoData (one row at a time)
-    // AND rows (csv data to map to expirationDays)
-    licenseExpirationDaysDict = {};
-    // console.log(stateGeoData.id) -- this will show 51 states
-    // FOR SOME REASON THIS FOR LOOP KEEPS GOING ON FOREVER AND BREAKING.
-    // for (var i = 0; i < 50; i++) {
-    //   console.log('test')
-    // //   // console.log(rows)
-    // //     // if (stateGeoData.id == rows[i].state_id) {
-    // //     //   licenseExpirationDaysDict[stateGeoData.id] = rows[i].days_until_expiration;
-    // //     //   break;
-    // //     // } else {
-    // //     //   licenseExpirationDaysDict[stateGeoData.id] = 0 // default color will map to black.
-    // //     // console.log("WIN")
-    // //     // }
-    // //     break;
-    // };
-  };
-};
-
 function getStateColor(usStates) {
   // get rgb code from scale func by using days until state license expiration.
-  // var daysUntilExpiration = licenseExpirationDaysDict[usStates.id];
-  return stateColorScale(usStates.id)
+  var expirationDays = expirationDaysDict[usStates.id]
+  return stateColorScale(expirationDays);
 };
 
 function drawMap(error, us) {
-  if (error) throw error // establish error handler for callback function.
-  var usStates = us.objects.states; // list of dict for ea US state.
-  getLicenseExpirationDaysDict(usStates);
+  if (error) throw error; // establish error handler for callback function.
 
   svg.append("g") // add group element to the svg
       .attr("class", "states") // draw all of the states with a class attribute in the json
     .selectAll("path") // allows manipulation of anything within a state border
-    .data(topojson.feature(us, usStates).features) // data join for state land
+    .data(topojson.feature(us, us.objects.states).features) // data join for state land
     .enter().append("path") // add new data since last data join, add path element
       .attr("d", path) // d attribute defines a path to be drawn, draws state land
       // .style("fill", stateColors[usStates.id])
@@ -125,18 +89,21 @@ function drawMap(error, us) {
       .on("mouseout", onMouseout) // must do event listener on path element
       .on("click", onClick)
 
-
   // draw all of the overlapping borders
   svg.append("path")
       .attr("class", "state-borders")
-      .attr("d", path(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; })))
+      .attr("d", path(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; })));
       // .style("fill", () => colors[Math.floor(Math.random() * 2) + 1]);
 };
 
+var expirationDaysDict = {};
+d3.json('expiration_days.json', function(expiration_days) {
+  expirationDaysDict = expiration_days;
+  });
 //further improvements: read csv directly from google sheets!
 d3.json("https://d3js.org/us-10m.v1.json", drawMap)
 
 // NOTES
 // 1. Understand JS scoping (with hoisting) of variables within functions.
 // 2. Callback functions and the difference between function with and without ().
-// 3. When to use semi-colon in JS.
+// 3. Understand async callback functions
