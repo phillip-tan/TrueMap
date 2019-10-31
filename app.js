@@ -69,8 +69,9 @@ function onMouseout(d) {
 
 function getStateColor(usStates) {
   // get rgb code from scale func by using days until state license expiration.
-  var expirationDays = stateLicensingData[usStates.id]
-  return stateColorScale(expirationDays);
+  var daysUntilExpiration = stateLicensingData.days_until_expiration[usStates.id]
+  
+  return stateColorScale(daysUntilExpiration);
 };
 
 function drawMap(error, us) {
