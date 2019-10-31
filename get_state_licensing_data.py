@@ -5,7 +5,7 @@ import logging
 FILE_PATH = 'state_licensing_data.csv'
 
 
-def get_days_until_expiration(expiration_dates):
+def get_days_until_expiration(state_ids, expiration_dates):
     today = pd.to_datetime('today')
     days_until_expiration = []
 
@@ -18,7 +18,10 @@ def get_days_until_expiration(expiration_dates):
             days = (today - expiration_dt.replace(year=(today.year))).days
         days_until_expiration.append(days)
 
-    return days_until_expiration
+    # get data in format {"05": 365, "17": 180, etc.}
+    days_until_expiration_by_state = dict(zip(state_ids, days_until_expiration))
+
+    return days_until_expiration_by_state
 
 
 def main():
@@ -30,14 +33,13 @@ def main():
     }
     state_licensing_df = pd.read_csv(FILE_PATH, dtype=dtype, parse_dates=['expiration_dt'])
 
-    state_licensing_dict = {
-        'days_until_expiration': get_days_until_expiration(state_licensing_df.expiration_dt),
+    days_until_expiration_by_state = get_days_until_expiration(state_licensing_df.state_id, state_licensing_df.expiration_dt)
+
+    state_licensing_data = {
+        'days_until_expiration': days_until_expiration_by_state,
         'state_licensing_link': []
     }
-    days_until_expiration = get_days_until_expiration(state_licensing_df.expiration_dt)
 
-    # TODO: have this return {"days_until_expiration": {"01": 365, "05": 100}}
-    state_licensing_data = dict(zip(state_licensing_df.state_id, days_until_expiration))
     with open('state_licensing_data.json', 'w') as state_licensing_data_json:
         json.dump(state_licensing_data, state_licensing_data_json)
 
